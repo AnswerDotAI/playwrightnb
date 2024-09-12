@@ -34,22 +34,40 @@ directly:
 
 ``` python
 sh_url = 'https://help.dyalog.com/19.0/#UserGuide/Installation%20and%20Configuration/Shell%20Scripts.htm'
-```
-
-``` python
 cts,iframes = read_page(sh_url)
-txt = iframes['topic']
+```
+
+Use [`h2md`](https://AnswerDotAI.github.io/playwrightnb/core.html#h2md)
+to convert the HTML to markdown:
+
+``` python
+print(h2md(iframes['topic'])[94:250])
+```
+
+    ## Shell Scripts
+
+    Shell scripts are typically executed from a terminal (or shell).
+
+    A script is executed by typing its name. User input is entered from the 
+
+In the case where you want to grab some particular element using a CSS
+selector, use
+[`url2md`](https://AnswerDotAI.github.io/playwrightnb/core.html#url2md)
+to read the page, find the selector, and convert to markdown. E.g, for
+accessing Discord’s JS-rendered docs:
+
+``` python
+url = 'https://discord.com/developers/docs/interactions/application-commands'
+sel = '.page-content-scrolling-container'
+md = url2md(url, sel)
 ```
 
 ``` python
-class HTMLTextExtractor(HTMLParser):
-    def handle_data(self, data): self.text.append(data.strip())
-
-parser = HTMLTextExtractor()
-parser.text = []
-parser.feed(txt)
-extracted_text = ' '.join(filter(None, parser.text))
-print(extracted_text[:100])
+print(md[856:1215])
 ```
 
-    Shell Scripts Open topic with navigation Old Release Notes > Release Notes – Dyalog v18.2 > Shell Sc
+    Application commands are native ways to interact with apps in the Discord client. There are 3 types of commands accessible in different interfaces: the chat input, a message's context menu (top-right menu or right-clicking in a message), and a user's context menu (right-clicking on a user).
+
+    ## Application Command Object
+
+    ###### Application Command Naming
