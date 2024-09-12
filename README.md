@@ -71,3 +71,7 @@ print(md[856:1215])
     ## Application Command Object
 
     ###### Application Command Naming
+
+If you don’t need JS-rendering or other fanciness, use
+[`get2md`](https://AnswerDotAI.github.io/playwrightnb/core.html#get2md)
+instead, which uses `httpx.get` instead of playwright.

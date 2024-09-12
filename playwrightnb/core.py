@@ -4,15 +4,17 @@
 
 # %% auto 0
 __all__ = ['get_page', 'page_ready', 'frames_ready', 'wait_page', 'get_full_content', 'read_page_async', 'read_page', 'h2md',
-           'url2md_async', 'url2md']
+           'url2md_async', 'url2md', 'get2md']
 
 # %% ../00_core.ipynb
 from fastcore.utils import *
+from fastcore.meta import delegates
 import uuid, warnings
 
 from playwright.async_api import async_playwright, TimeoutError as PTimeoutError
 from playwright_stealth import stealth_async
 from anyio import from_thread
+from httpx import get
 
 from bs4 import BeautifulSoup, GuessedAtParserWarning
 from html2text import HTML2Text
@@ -109,6 +111,16 @@ def url2md(url, sel=None, pause=50, timeout=5000, page=None):
     "Read `url` with `read_page`"
     warnings.filterwarnings("ignore", category=GuessedAtParserWarning)
     cts,_ = read_page(url, pause, timeout=timeout, page=page)
+    soup = BeautifulSoup(cts)
+    content = soup.select_one(sel)
+    return h2md(content)
+
+# %% ../00_core.ipynb
+@delegates(get)
+def get2md(url, sel=None, **kwargs):
+    "Read `url` with `httpx.get`"
+    warnings.filterwarnings("ignore", category=GuessedAtParserWarning)
+    cts = get(url, **kwargs)
     soup = BeautifulSoup(cts)
     content = soup.select_one(sel)
     return h2md(content)
