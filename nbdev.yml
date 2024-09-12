@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "playwrightnb"
+  site-url: "https://AnswerDotAI.github.io/playwrightnb"
+  description: "Helpers for using Playwright from notebooks and more"
+  repo-branch: main
+  repo-url: "https://github.com/AnswerDotAI/playwrightnb"

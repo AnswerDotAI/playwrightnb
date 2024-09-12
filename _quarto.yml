@@ -1,0 +1,44 @@
+project:
+  type: website
+  resources: 
+    - "*.png"
+    - "*.jpg"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-tools: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: arrow
+    grid:
+      sidebar-width: 180px
+      body-width: 1800px
+      margin-width: 150px
+      gutter-width: 1.0rem
+    keep-md: true
+  commonmark: default
+
+website:
+  site-url: "https://answerdotai.github.io/fastlite/"
+  twitter-card:
+    card-style: summary
+    creator: "@jeremyphoward"
+    site: "@jeremyphoward"
+  open-graph: true
+  repo-url: https://github.com/AnswerDotAI/fastlite
+  repo-subdir: nbs
+  repo-actions: [edit, issue, source]
+  navbar:
+    background: primary
+    search: true
+    right:
+      - icon: github
+        href: https://github.com/AnswerDotAI/fastlite
+        aria-label: GitHub
+  sidebar:
+    style: floating
+
+metadata-files: [nbdev.yml, sidebar.yml]
