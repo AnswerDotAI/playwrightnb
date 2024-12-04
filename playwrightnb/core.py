@@ -20,13 +20,13 @@ from bs4 import BeautifulSoup, GuessedAtParserWarning
 from html2text import HTML2Text
 
 # %% ../00_core.ipynb
-async def get_page(*args, **kwargs):
+async def get_page(*args, stealth=False, **kwargs):
     p = await async_playwright().start()
     c = await p.chromium.launch(*args, **kwargs)
     ctx = await c.new_context()
     page = await ctx.new_page()
     page.stop = p.stop
-    await stealth_async(page)
+    if stealth: await stealth_async(page)
     return page
 
 # %% ../00_core.ipynb
