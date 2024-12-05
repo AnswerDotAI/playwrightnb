@@ -72,10 +72,10 @@ async def get_full_content(page):
     return main_content, iframe_contents
 
 # %% ../00_core.ipynb
-async def read_page_async(url, pause=50, timeout=5000, page=None):
+async def read_page_async(url, pause=50, timeout=5000, stealth=False, page=None):
     "Return contents of `url` and its iframes using Playwright async"
     has_page = bool(page)
-    if not page: page = await get_page()
+    if not page: page = await get_page(stealth=stealth)
     try:
         await page.goto(url)
         await wait_page(page, pause=pause, timeout=timeout)
@@ -84,9 +84,9 @@ async def read_page_async(url, pause=50, timeout=5000, page=None):
         if not has_page: await page.close()
 
 # %% ../00_core.ipynb
-def read_page(url, pause=50, timeout=5000, page=None):
+def read_page(url, pause=50, timeout=5000, stealth=False, page=None):
     "Return contents of `url` and its iframes using Playwright"
-    with from_thread.start_blocking_portal() as p: return p.call(read_page_async, url, pause, timeout, page)
+    with from_thread.start_blocking_portal() as p: return p.call(read_page_async, url, pause, timeout, stealth, page)
 
 # %% ../00_core.ipynb
 def h2md(h):
@@ -98,19 +98,19 @@ def h2md(h):
     return h2t.handle(str(h))
 
 # %% ../00_core.ipynb
-async def url2md_async(url, sel=None, pause=50, timeout=5000, page=None):
+async def url2md_async(url, sel=None, pause=50, timeout=5000, stealth=False, page=None):
     "Read `url` with `read_page`, optionally selecting CSS selector `sel`"
     warnings.filterwarnings("ignore", category=GuessedAtParserWarning)
-    cts,_ = await read_page_async(url, pause, timeout=timeout, page=page)
+    cts,_ = await read_page_async(url, pause, timeout=timeout, stealth=stealth, page=page)
     soup = BeautifulSoup(cts)
     content = soup.select_one(sel)
     return h2md(content)
 
 # %% ../00_core.ipynb
-def url2md(url, sel=None, pause=50, timeout=5000, page=None):
+def url2md(url, sel=None, pause=50, timeout=5000, stealth=False, page=None):
     "Read `url` with `read_page`"
     warnings.filterwarnings("ignore", category=GuessedAtParserWarning)
-    cts,_ = read_page(url, pause, timeout=timeout, page=page)
+    cts,_ = read_page(url, pause, timeout=timeout, stealth=stealth, page=page)
     soup = BeautifulSoup(cts)
     content = soup.select_one(sel)
     return h2md(content)
