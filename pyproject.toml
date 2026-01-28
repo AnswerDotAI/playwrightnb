@@ -3,19 +3,16 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name="playwrightnb"
+name = "playwrightnb"
 dynamic = ["version"]
 description = "Helpers for using Playwright from notebooks and more"
 readme = "README.md"
-requires-python=">=3.8"
+requires-python = ">=3.8"
 license = {text = "Apache-2.0"}
 authors = [{name = "Jeremy Howard", email = "info@fast.ai"}]
 keywords = ['nbdev', 'jupyter', 'notebook', 'python', 'playwright']
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-]
-dependencies = ["fastcore","playwright","playwright-stealth","anyio","html2text","beautifulsoup4","httpx"]
+classifiers = ["Natural Language :: English", "Intended Audience :: Developers", "Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3 :: Only"]
+dependencies = ['fastcore', 'playwright', 'playwright-stealth', 'anyio', 'html2text', 'beautifulsoup4', 'httpx']
 
 [project.urls]
 Repository = "https://github.com/AnswerDotAI/playwrightnb"
