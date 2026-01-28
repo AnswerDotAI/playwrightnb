@@ -1,11 +1,35 @@
 [build-system]
-requires = ["setuptools>=64.0"]
+requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name="playwrightnb"
+dynamic = ["version"]
+description = "Helpers for using Playwright from notebooks and more"
+readme = "README.md"
 requires-python=">=3.8"
-dynamic = [ "keywords", "description", "version", "dependencies", "optional-dependencies", "readme", "license", "authors", "classifiers", "entry-points", "scripts", "urls"]
+license = {text = "Apache-2.0"}
+authors = [{name = "Jeremy Howard", email = "info@fast.ai"}]
+keywords = ['nbdev', 'jupyter', 'notebook', 'python', 'playwright']
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = []
 
-[tool.uv]
-cache-keys = [{ file = "pyproject.toml" }, { file = "settings.ini" }, { file = "setup.py" }]
+[project.urls]
+Repository = "https://github.com/AnswerDotAI/playwrightnb"
+Documentation = "https://AnswerDotAI.github.io/playwrightnb"
+
+[project.entry-points.nbdev]
+playwrightnb = "playwrightnb._modidx:d"
+
+[tool.setuptools.dynamic]
+version = {attr = "playwrightnb.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["playwrightnb"]
+
+[tool.nbdev]
+nbs_path = '.'
+custom_sidebar = false
