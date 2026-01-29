@@ -1,0 +1,70 @@
+[
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "PlaywrightNB source",
+    "section": "",
+    "text": "source\n\nget_page\n\ndef get_page(\n    args:VAR_POSITIONAL, stealth:bool=False, kwargs:VAR_KEYWORD\n):\n\n\npage = await get_page()\nawait page.goto('http://example.org')\n\n&lt;Response url='http://example.org/' request=&lt;Request url='http://example.org/' method='GET'&gt;&gt;\n\n\n\nsource\n\n\npage_ready\n\ndef page_ready(\n    page, pause:int=50, timeout:int=5000\n):\n\nWaith until main content of page is ready\n\nsource\n\n\nframes_ready\n\ndef frames_ready(\n    page, pause:int=50, timeout:int=5000\n):\n\nWait until all visible frames (if any) on page are ready\n\nsource\n\n\nwait_page\n\ndef wait_page(\n    page, pause:int=50, timeout:int=5000\n):\n\nWait until page and visible frames (if any) on page are ready\n\nsh_url = 'https://help.dyalog.com/19.0/#UserGuide/Installation%20and%20Configuration/Shell%20Scripts.htm'\n\n\nawait page.goto(sh_url)\nawait wait_page(page)\n\n\nsource\n\n\nget_full_content\n\ndef get_full_content(\n    page\n):\n\nTuple of page content and dict of frames’ content\n\ncts, iframes = await get_full_content(page)\n\n\nawait page.close()\n\n\nsource\n\n\nread_page_async\n\ndef read_page_async(\n    url, pause:int=50, timeout:int=5000, stealth:bool=False, page:NoneType=None\n):\n\nReturn contents of url and its iframes using Playwright async\n\ncts,iframes = await read_page_async(sh_url)\n\n\nsource\n\n\nread_page\n\ndef read_page(\n    url, pause:int=50, timeout:int=5000, stealth:bool=False, page:NoneType=None\n):\n\nReturn contents of url and its iframes using Playwright\n\ncts,iframes = read_page(sh_url)\n\n\niframes['topic'][:50]\n\n'&lt;!DOCTYPE html&gt;&lt;html xmlns:madcap=\"http://www.madc'\n\n\n\nsource\n\n\nh2md\n\ndef h2md(\n    h\n):\n\nConvert HTML h to markdown using `HTML2Text\n\nsource\n\n\nurl2md_async\n\ndef url2md_async(\n    url, sel:NoneType=None, pause:int=50, timeout:int=5000, stealth:bool=False, page:NoneType=None\n):\n\nRead url with read_page, optionally selecting CSS selector sel\n\nsource\n\n\nurl2md\n\ndef url2md(\n    url, sel:NoneType=None, pause:int=50, timeout:int=5000, stealth:bool=False, page:NoneType=None\n):\n\nRead url with read_page\n\nsource\n\n\nget2md\n\ndef get2md(\n    url, sel:NoneType=None, params:QueryParamTypes | None=None, headers:HeaderTypes | None=None,\n    cookies:CookieTypes | None=None, auth:AuthTypes | None=None, proxy:ProxyTypes | None=None,\n    follow_redirects:bool=False, verify:ssl.SSLContext | str | bool=True, timeout:TimeoutTypes=Timeout(timeout=5.0),\n    trust_env:bool=True\n):\n\nRead url with httpx.get\n\nurl = 'https://docs.railway.app/guides/public-api'\nmd = get2md(url, \".docs-content\")\nprint(md[:120])\n\nNone",
+    "crumbs": [
+      "PlaywrightNB source"
+    ]
+  },
+  {
+    "objectID": "CHANGELOG.html",
+    "href": "CHANGELOG.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "CHANGELOG.html#section",
+    "href": "CHANGELOG.html#section",
+    "title": "",
+    "section": "0.2.2",
+    "text": "0.2.2\n\nNew Features\n\nAdd get2md (#3)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-1",
+    "href": "CHANGELOG.html#section-1",
+    "title": "",
+    "section": "0.2.1",
+    "text": "0.2.1\n\nNew Features\n\nAdd url2md (#2)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-2",
+    "href": "CHANGELOG.html#section-2",
+    "title": "",
+    "section": "0.2.0",
+    "text": "0.2.0\n\nNew Features\n\nasync and sync versions (#1)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PlaywrightNB",
+    "section": "",
+    "text": "PlaywrightNB provides some little quality-of-life helpers for interactive use of the wonderful Playwright library. It’s likely to be particularly of interest to folks using Jupyter.",
+    "crumbs": [
+      "PlaywrightNB"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "PlaywrightNB",
+    "section": "Install",
+    "text": "Install\npip install playwrightnb",
+    "crumbs": [
+      "PlaywrightNB"
+    ]
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "PlaywrightNB",
+    "section": "Overview",
+    "text": "Overview\n\nfrom playwrightnb import *\nfrom html.parser import HTMLParser\n\nplaywrightnb provide two main functions: read_page_async(url), and read_page(url). They are identical except the 1st is async.\nThey return a tuple of the main HTML page contents, and a dict mapping iframe IDs to their HTML contents. They handle Javascript and other trickiness largely automatically, however you can pass a pause parameter (in milliseconds) if you need to insert some manual waits. You can also pass a timeout (also in milliseconds).\nFor instance, the Dyalog APL help information is provided inside an iframe that’s dynamically loaded by JS, but we are able to read it directly:\n\nsh_url = 'https://help.dyalog.com/19.0/#UserGuide/Installation%20and%20Configuration/Shell%20Scripts.htm'\ncts,iframes = read_page(sh_url)\n\nUse h2md to convert the HTML to markdown:\n\nprint(h2md(iframes['topic'])[94:250])\n\n## Shell Scripts\n\nShell scripts are typically executed from a terminal (or shell).\n\nA script is executed by typing its name. User input is entered from the \n\n\nIn the case where you want to grab some particular element using a CSS selector, use url2md to read the page, find the selector, and convert to markdown. E.g, for accessing Discord’s JS-rendered docs:\n\nurl = 'https://discord.com/developers/docs/interactions/application-commands'\nsel = '.page-content-scrolling-container'\nmd = url2md(url, sel)\n\n\nprint(md[856:1215])\n\nApplication commands are native ways to interact with apps in the Discord client. There are 3 types of commands accessible in different interfaces: the chat input, a message's context menu (top-right menu or right-clicking in a message), and a user's context menu (right-clicking on a user).\n\n## Application Command Object\n\n###### Application Command Naming\n\n\n\n\nIf you don’t need JS-rendering or other fanciness, use get2md instead, which uses httpx.get instead of playwright.",
+    "crumbs": [
+      "PlaywrightNB"
+    ]
+  }
+]
