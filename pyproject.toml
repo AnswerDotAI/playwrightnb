@@ -28,5 +28,6 @@ version = {attr = "playwrightnb.__version__"}
 include = ["playwrightnb"]
 
 [tool.nbdev]
+allowed_metadata_keys = ['solveit_dialog_mode', 'solveit_ver']
 nbs_path = '.'
 custom_sidebar = false
