@@ -28,6 +28,7 @@ version = {attr = "playwrightnb.__version__"}
 include = ["playwrightnb"]
 
 [tool.nbdev]
-allowed_metadata_keys = ['solveit_dialog_mode', 'solveit_ver']
+allowed_metadata_keys = ['solveit']
+allowed_cell_metadata_keys = ['solveit_ai']
 nbs_path = '.'
 custom_sidebar = false
